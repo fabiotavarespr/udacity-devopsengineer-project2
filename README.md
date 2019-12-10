@@ -1,4 +1,4 @@
-# Udacity Cloud DevOps Engineer Project 2
+# Udacity - Cloud DevOps Engineer - Project 2
 
 Codes written in Udacity's Cloud DevOps Engineer Nanodegree Course.  
 
