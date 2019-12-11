@@ -223,39 +223,40 @@ Resources:
         ToPort: 65535
         CidrIp: 0.0.0.0/0
 
-  # ListS3BucketsInstanceProfile:
-  #   Type: AWS::IAM::InstanceProfile
-  #   Properties:
-  #     Path: "/"
-  #     Roles:
-  #     - Ref: ListS3BucketsRole
+  ListS3BucketsInstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Path: "/"
+      Roles:
+      - Ref: ListS3BucketsRole
 
-  # ListS3BucketsPolicy:
-  #   Type: AWS::IAM::Policy
-  #   Properties:
-  #     PolicyName: ListS3BucketsPolicy
-  #     PolicyDocument:
-  #       Statement:
-  #       - Effect: Allow
-  #         Action:
-  #         - s3:List*
-  #         Resource: "*"
-  #     Roles:
-  #     - Ref: ListS3BucketsRole
+  ListS3BucketsPolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: ListS3BucketsPolicy
+      PolicyDocument:
+        Statement:
+        - Effect: Allow
+          Action:
+          - s3:List*
+          - S3:Get*
+          Resource: "*"
+      Roles:
+      - Ref: ListS3BucketsRole
 
-  # ListS3BucketsRole:
-  #   Type: AWS::IAM::Role
-  #   Properties:
-  #     AssumeRolePolicyDocument:
-  #       Version: '2012-10-17'
-  #       Statement:
-  #       - Effect: Allow
-  #         Principal:
-  #           Service:
-  #           - ec2.amazonaws.com
-  #         Action:
-  #         - sts:AssumeRole
-  #     Path: "/"
+  ListS3BucketsRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - ec2.amazonaws.com
+          Action:
+          - sts:AssumeRole
+      Path: "/"
 
   WebAppLaunchConfig:
     Type: AWS::AutoScaling::LaunchConfiguration
@@ -268,16 +269,15 @@ Resources:
           apt-get install apache2 -y
           systemctl start apache2.service
           cd /var/www/html
-          aws s3 cp s3://fabiotavarespr-udagram/udagram.zip udacity.zip
-          unzip -o udacity.zip
-          rm -rf udacity.zip
-          # echo "It works! Udagram, Udacity" > index.html
+          aws s3 cp s3://fabiotavarespr-udagram/udagram.zip .
+          unzip -o udagram.zip
+          rm -rf udagram.zip
           chown -R www-data:www-data .
       ImageId: ami-06d51e91cea0dac8d
-      # IamInstanceProfile: !Ref ListS3BucketsInstanceProfile
+      IamInstanceProfile: !Ref ListS3BucketsInstanceProfile
       SecurityGroups:
       - Ref: WebServerSecGroup
-      InstanceType: t2.micro
+      InstanceType: t3.small
       BlockDeviceMappings:
       - DeviceName: "/dev/sdk"
         Ebs:
@@ -290,7 +290,7 @@ Resources:
       LaunchConfigurationName:
         Ref: WebAppLaunchConfig
       MinSize: '2' # Min amount of instances
-      MaxSize: '3' # Max amount of instances
+      MaxSize: '5' # Max amount of instances
       TargetGroupARNs:
         - Ref: WebAppTargetGroup
 
