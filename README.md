@@ -1,8 +1,12 @@
 # Udacity - Cloud DevOps Engineer - Project 2
 
-Codes written in Udacity's Cloud DevOps Engineer Nanodegree Course.  
+Codes written in [Udacity's Cloud DevOps Engineer Nanodegree Course](https://www.udacity.com/course/cloud-dev-ops-nanodegree--nd9991).
 
 Project 2: Deploy a high-availability web app using CloudFormation
+
+This is the infrastructure diagram for what this cloudformation script deploys
+
+![diagram](./diagram.png)
 
 ## Pre-requisites
 
@@ -15,13 +19,10 @@ Project 2: Deploy a high-availability web app using CloudFormation
 all the resources qualify for the [AWS Free Tier](https://aws.amazon.com/free/), but we are not responsible for any
 charges you may incur.** 
 
-Configure your [AWS access 
-keys](http://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys) as 
-environment variables:
+Configure your [AWS access](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html):
 
 ```
-export AWS_ACCESS_KEY_ID=(your access key id)
-export AWS_SECRET_ACCESS_KEY=(your secret access key)
+aws configure
 ```
 
 ## Description of Parameters
